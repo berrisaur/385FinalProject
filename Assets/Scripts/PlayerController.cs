@@ -6,7 +6,7 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        Vector3 pos = transform.position;
+        Vector3 pos = transform.position; //change to .move position?????
 
         if (Input.GetKey(KeyCode.W))
         {
