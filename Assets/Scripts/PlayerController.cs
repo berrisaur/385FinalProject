@@ -1,44 +1,39 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Movement : MonoBehaviour
+[RequireComponent(typeof(Rigidbody2D))]
+public class PlayerController : MonoBehaviour
 {
     public float speed = 10f;
     public int keys = 0;
+    int totalKeys = 3;
+    public TMP_Text keysLeft;
+
+    private Rigidbody2D rb;
+    private Vector2 movement;
+
+    public Image[] keyImages; // UI key icons
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     void Update()
     {
-        Vector3 pos = transform.position; //change to .move position?????
+        // Get input
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetKey(KeyCode.W))
-        {
-            pos.y += speed * Time.deltaTime;
-        }
-
-        if (Input.GetKey(KeyCode.S))
-        {
-            pos.y -= speed * Time.deltaTime;
-        }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            pos.x += speed * Time.deltaTime;
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            pos.x -= speed * Time.deltaTime;
-        }
-
-        transform.position = pos;
-
-       
+        // Update UI
+        keysLeft.text = "Keys left: " + (totalKeys - keys).ToString();
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void FixedUpdate()
     {
-        if(collision.gameObject.tag == "Key"){
-            keys++;
-            Destroy(collision.gameObject);
-        }
+        // Move the player smoothly using physics
+        rb.MovePosition(rb.position + movement.normalized * speed * Time.fixedDeltaTime);
     }
+
 }
