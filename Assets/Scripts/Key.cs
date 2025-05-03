@@ -1,3 +1,4 @@
+using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 
 public class Key : MonoBehaviour
@@ -23,9 +24,10 @@ public class Key : MonoBehaviour
 
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Player"){
+            Debug.Log("Collision happened");
             // disable the key image
             player.keyImages[player.keys].enabled = false;
 
@@ -43,6 +45,6 @@ public class Key : MonoBehaviour
             }
             
         }
-        
     }
+
 }
