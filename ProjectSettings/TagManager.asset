@@ -42,14 +42,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Walls
-    uniqueID: 1753883347
+  - name: FurnitureNoCollision
+    uniqueID: 1703965087
     locked: 0
   - name: Furniture
     uniqueID: 1037851717
     locked: 0
-  - name: New Layer 4
-    uniqueID: 1703965087
+  - name: Walls
+    uniqueID: 1753883347
     locked: 0
   - name: Floor
     uniqueID: 4105209413
