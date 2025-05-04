@@ -10,10 +10,12 @@ public class PlayerController : MonoBehaviour
     int totalKeys = 3;
     public TMP_Text keysLeft;
 
+    public Image[] keyImages; // UI key icons
+    public ParticleSystem keyParticles; // Assign in Inspector
+    public bool hasKey = false; // Prevent multiple pickups
+
     private Rigidbody2D rb;
     private Vector2 movement;
-
-    public Image[] keyImages; // UI key icons
 
     void Start()
     {
@@ -22,18 +24,40 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // Get input
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
-        // Update UI
         keysLeft.text = "Keys left: " + (totalKeys - keys).ToString();
     }
 
     void FixedUpdate()
     {
-        // Move the player smoothly using physics
         rb.MovePosition(rb.position + movement.normalized * speed * Time.fixedDeltaTime);
     }
 
+    
+
+    public void PickupKey()
+    {
+        if (!hasKey)
+        {
+            hasKey = true;
+            keyParticles.Play();
+        }
+    }
+
+
+    public void OpenDoor()
+    {
+        if (hasKey)
+        {
+            hasKey = false;
+            keys++;
+
+            if (keys < keyImages.Length)
+                keyImages[keys - 1].enabled = false;
+
+            keyParticles.Stop();
+        }
+    }
 }
