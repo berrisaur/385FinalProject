@@ -1,50 +1,56 @@
-using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 
 public class Key : MonoBehaviour
 {
-    public BoxCollider2D gridArea;
+    public BoxCollider2D[] spawnZones; // Assign multiple room colliders in Inspector
     public PlayerController player;
 
-    int maxSpawn = 3;
+    private int maxSpawn = 3;
 
     void Start()
     {
         RandomizePosition();
     }
 
-    void RandomizePosition(){
-        Bounds bounds = this.gridArea.bounds;
+    void RandomizePosition()
+    {
+        if (spawnZones.Length == 0)
+        {
+            Debug.LogWarning("No spawn zones assigned!");
+            return;
+        }
 
+        // Pick a random room zone
+        BoxCollider2D zone = spawnZones[Random.Range(0, spawnZones.Length)];
+        Bounds bounds = zone.bounds;
+
+        // Generate a random position within that zone
         float x = Mathf.Round(Random.Range(bounds.min.x, bounds.max.x));
-        
         float y = Mathf.Round(Random.Range(bounds.min.y, bounds.max.y));
 
-        this.transform.position = new Vector3(x, y, 0.0f);
-
+        transform.position = new Vector3(x, y, 0f);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Player"){
+        if (collision.CompareTag("Player"))
+        {
             Debug.Log("Collision happened");
-            // disable the key image
-            player.keyImages[player.keys].enabled = false;
 
-            // increment the keys count
+            if (player.keys < player.keyImages.Length)
+                player.keyImages[player.keys].enabled = false;
+
             player.keys++;
-            
-            // only spawn up to 3 keys
-            if(maxSpawn > 1){
-                RandomizePosition();
+
+            if (maxSpawn > 1)
+            {
                 maxSpawn--;
+                RandomizePosition();
             }
-            else{
-                // deactivate the key prefab if 3 keys are collected
+            else
+            {
                 Destroy(gameObject);
             }
-            
         }
     }
-
 }

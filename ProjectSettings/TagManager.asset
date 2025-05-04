@@ -54,5 +54,8 @@ TagManager:
   - name: Floor
     uniqueID: 4105209413
     locked: 0
+  - name: Sprites like players, keys, ghosts
+    uniqueID: 1847678761
+    locked: 0
   m_RenderingLayers:
   - Default
