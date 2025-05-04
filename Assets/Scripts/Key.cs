@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Key : MonoBehaviour
 {
-    public BoxCollider2D[] spawnZones; // Assign multiple room colliders in Inspector
+    public BoxCollider2D[] spawnZones;
     public PlayerController player;
 
     private int maxSpawn = 3;
@@ -20,11 +20,9 @@ public class Key : MonoBehaviour
             return;
         }
 
-        // Pick a random room zone
         BoxCollider2D zone = spawnZones[Random.Range(0, spawnZones.Length)];
         Bounds bounds = zone.bounds;
 
-        // Generate a random position within that zone
         float x = Mathf.Round(Random.Range(bounds.min.x, bounds.max.x));
         float y = Mathf.Round(Random.Range(bounds.min.y, bounds.max.y));
 
@@ -35,22 +33,24 @@ public class Key : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("Collision happened");
+            PlayerController pc = collision.GetComponent<PlayerController>();
 
-            if (player.keys < player.keyImages.Length)
-                player.keyImages[player.keys].enabled = false;
-
-            player.keys++;
-
-            if (maxSpawn > 1)
+            // Only allow pickup if the player doesn't already have a key
+            if (!pc.hasKey)
             {
-                maxSpawn--;
-                RandomizePosition();
-            }
-            else
-            {
-                Destroy(gameObject);
+                pc.PickupKey();
+
+                if (maxSpawn > 1)
+                {
+                    maxSpawn--;
+                    RandomizePosition();
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
             }
         }
     }
+
 }
