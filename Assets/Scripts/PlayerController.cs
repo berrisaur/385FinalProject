@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public Image[] keyImages; // UI key icons
     public ParticleSystem keyParticles; // Assign in Inspector
     public bool hasKey = false; // Prevent multiple pickups
+    private AudioSource keySound; 
 
     private Rigidbody2D rb;
     private Vector2 movement;
@@ -20,6 +21,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        keySound = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -41,6 +43,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!hasKey)
         {
+            if (keySound != null) keySound.Play();
             hasKey = true;
             keyParticles.Play();
         }
