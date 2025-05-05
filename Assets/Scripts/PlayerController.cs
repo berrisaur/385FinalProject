@@ -55,10 +55,12 @@ public class PlayerController : MonoBehaviour
         if (hasKey)
         {
             hasKey = false;
-            keys++;
+            
 
             if (keys < keyImages.Length)
-                keyImages[keys - 1].enabled = false;
+                keyImages[keys].enabled = false;
+
+            keys++;
 
             keyParticles.Stop();
         }
