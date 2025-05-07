@@ -21,25 +21,8 @@ public class Footsteps : MonoBehaviour
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
         {
 
-            if (Input.GetKey(KeyCode.LeftShift))
+           footstepsSound.enabled = true;
 
-            {
-
-                footstepsSound.enabled = false;
-
-                sprintSound.enabled = true;
-
-            }
-
-            else
-
-            {
-
-                footstepsSound.enabled = true;
-
-                sprintSound.enabled = false;
-
-            }
 
         }
 
@@ -49,7 +32,6 @@ public class Footsteps : MonoBehaviour
 
             footstepsSound.enabled = false;
 
-            sprintSound.enabled = false;
 
         }
 
