@@ -4,12 +4,19 @@ public class GhostBehavior : MonoBehaviour
 {
     public float chaseDistance = 5f; // Adjust the distance at which the ghost starts chasing
     public float moveSpeed = 2f;     // Adjust the ghost's movement speed
+    public float idleRadius = 0.5f;  // Adjust the radius of the idle circle
+    public float idleSpeed = 0.5f;   // Adjust the speed of the idle circle
+
     private Transform playerTransform;
     private Animator animator;
+    private Vector3 initialPosition; // Store the starting position
 
     void Start()
     {
-        // Find the player GameObject (you might need to adjust this based on your player setup)
+        // Store the initial position when the game starts
+        initialPosition = transform.position;
+
+        // Find the player GameObject
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
@@ -18,15 +25,15 @@ public class GhostBehavior : MonoBehaviour
         else
         {
             Debug.LogError("Player GameObject not found with the 'Player' tag!");
-            enabled = false; // Disable the script if no player is found
+            enabled = false;
         }
 
-        // Get the Animator component attached to the ghost
+        // Get the Animator component
         animator = GetComponent<Animator>();
         if (animator == null)
         {
             Debug.LogError("Animator component not found on this GameObject!");
-            enabled = false; // Disable the script if no animator is found
+            enabled = false;
         }
     }
 
@@ -34,30 +41,23 @@ public class GhostBehavior : MonoBehaviour
     {
         if (playerTransform != null && animator != null)
         {
-            // Calculate the distance to the player
             float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
 
-            // Check if the player is within the chase distance
             if (distanceToPlayer < chaseDistance)
             {
-                // Set the IsChasing parameter to true
                 animator.SetBool("IsChasing", true);
-
-                // Move towards the player
                 Vector2 direction = (playerTransform.position - transform.position).normalized;
                 transform.Translate(direction * moveSpeed * Time.deltaTime);
             }
             else
             {
-                // Set the IsChasing parameter to false
                 animator.SetBool("IsChasing", false);
 
-                // Simple circular idle movement
-                float angle = Time.time * 0.5f;
-                float radius = 0.5f;
-                float x = Mathf.Cos(angle) * radius;
-                float y = Mathf.Sin(angle) * radius;
-                transform.localPosition = new Vector2(x, y);
+                // Circular idle movement around the initial position
+                float angle = Time.time * idleSpeed;
+                float x = initialPosition.x + Mathf.Cos(angle) * idleRadius;
+                float y = initialPosition.y + Mathf.Sin(angle) * idleRadius;
+                transform.position = new Vector3(x, y, transform.position.z); // Maintain original Z
             }
         }
     }
