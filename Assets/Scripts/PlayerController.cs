@@ -17,11 +17,15 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
     private Vector2 movement;
+    private HealthSystem healthSystem;
+
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         keySound = GetComponent<AudioSource>();
+        healthSystem = GetComponent<HealthSystem>();
+
     }
 
     void Update()
@@ -50,15 +54,23 @@ public class PlayerController : MonoBehaviour
 
     
 
-    public void PickupKey()
+   public void PickupKey()
+{
+    if (!hasKey)
     {
-        if (!hasKey)
+        if (keySound != null) keySound.Play();
+        hasKey = true;
+        keyParticles.Play();
+
+        // Heal 50% of max health
+        if (healthSystem != null)
         {
-            if (keySound != null) keySound.Play();
-            hasKey = true;
-            keyParticles.Play();
+            float healAmount = healthSystem.maxHealth * 0.5f;
+            healthSystem.Heal(healAmount);
         }
     }
+}
+
 
 
     public void OpenDoor()
