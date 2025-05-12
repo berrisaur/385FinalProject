@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class HealthSystem : MonoBehaviour
@@ -19,6 +20,10 @@ public class HealthSystem : MonoBehaviour
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
         healthSlider.value = currentHealth;
+
+        if(currentHealth ==  0){
+            SceneManager.LoadScene(1);
+        }
     }
 
     public void Heal(float amount)
