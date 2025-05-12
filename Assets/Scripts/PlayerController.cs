@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -87,5 +88,10 @@ public class PlayerController : MonoBehaviour
 
             keyParticles.Stop();
         }
+    }
+
+    public void RestartGame(){
+        
+        SceneManager.LoadScene(0);
     }
 }
