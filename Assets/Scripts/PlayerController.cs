@@ -30,7 +30,18 @@ public class PlayerController : MonoBehaviour
         movement.y = Input.GetAxisRaw("Vertical");
 
         keysLeft.text = "Keys left: " + (totalKeys - keys).ToString();
+
+        // Ensure particle system stays on while player has key
+        if (hasKey && !keyParticles.isPlaying)
+        {
+            keyParticles.Play();
+        }
+        else if (!hasKey && keyParticles.isPlaying)
+        {
+            keyParticles.Stop();
+        }
     }
+
 
     void FixedUpdate()
     {
