@@ -2,22 +2,24 @@ using UnityEngine;
 
 public class GhostBehavior : MonoBehaviour
 {
-    public float chaseDistance = 5f; // Adjust the distance at which the ghost starts chasing
-    public float moveSpeed = 2f;     // Adjust the ghost's movement speed
-    public float idleRadius = 0.5f;  // Adjust the radius of the idle circle
-    public float idleSpeed = 0.5f;   // Adjust the speed of the idle circle
-    public float damageAmount = 25f; // Damage to inflict on contact
+    public float chaseDistance = 5f;
+    public float moveSpeed = 2f;
+    public float returnSpeed = 1.5f;   // Speed when returning to initial position
+    public float idleRadius = 0.5f;
+    public float idleSpeed = 0.5f;
+    public float damageAmount = 25f;
+    public float idleActivationDistance = 0.1f; // Distance threshold to start idling again
 
     private Transform playerTransform;
     private Animator animator;
-    private Vector3 initialPosition; // Store the starting position
+    private Vector3 initialPosition;
+
+    private bool isReturningToStart = false;
 
     void Start()
     {
-        // Store the initial position when the game starts
         initialPosition = transform.position;
 
-        // Find the player GameObject
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
@@ -29,7 +31,6 @@ public class GhostBehavior : MonoBehaviour
             enabled = false;
         }
 
-        // Get the Animator component
         animator = GetComponent<Animator>();
         if (animator == null)
         {
@@ -40,30 +41,51 @@ public class GhostBehavior : MonoBehaviour
 
     void Update()
     {
-        if (playerTransform != null && animator != null)
-        {
-            float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
+        if (playerTransform == null || animator == null) return;
 
-            if (distanceToPlayer < chaseDistance)
+        float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
+
+        if (distanceToPlayer < chaseDistance)
+        {
+            // Chase player
+            isReturningToStart = false;
+            animator.SetBool("IsChasing", true);
+
+            Vector2 direction = (playerTransform.position - transform.position).normalized;
+            transform.Translate(direction * moveSpeed * Time.deltaTime);
+        }
+        else
+        {
+            animator.SetBool("IsChasing", false);
+
+            float distanceToStart = Vector2.Distance(transform.position, initialPosition);
+
+            if (distanceToStart > idleActivationDistance)
             {
-                animator.SetBool("IsChasing", true);
-                Vector2 direction = (playerTransform.position - transform.position).normalized;
-                transform.Translate(direction * moveSpeed * Time.deltaTime);
+                // Move back to original position
+                isReturningToStart = true;
+                Vector2 directionToStart = (initialPosition - transform.position).normalized;
+                transform.Translate(directionToStart * returnSpeed * Time.deltaTime);
             }
             else
             {
-                animator.SetBool("IsChasing", false);
+                // Snap to initial position and start idle movement
+                if (isReturningToStart)
+                {
+                    transform.position = initialPosition;
+                    isReturningToStart = false;
+                }
 
-                // Circular idle movement around the initial position
+                // Perform idle circular motion
                 float angle = Time.time * idleSpeed;
                 float x = initialPosition.x + Mathf.Cos(angle) * idleRadius;
                 float y = initialPosition.y + Mathf.Sin(angle) * idleRadius;
-                transform.position = new Vector3(x, y, transform.position.z); // Maintain original Z
+                transform.position = new Vector3(x, y, transform.position.z);
             }
         }
+
     }
 
-    // Damage player on contact
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
