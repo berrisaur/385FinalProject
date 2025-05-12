@@ -6,6 +6,7 @@ public class GhostBehavior : MonoBehaviour
     public float moveSpeed = 2f;     // Adjust the ghost's movement speed
     public float idleRadius = 0.5f;  // Adjust the radius of the idle circle
     public float idleSpeed = 0.5f;   // Adjust the speed of the idle circle
+    public float damageAmount = 25f; // Damage to inflict on contact
 
     private Transform playerTransform;
     private Animator animator;
@@ -58,6 +59,19 @@ public class GhostBehavior : MonoBehaviour
                 float x = initialPosition.x + Mathf.Cos(angle) * idleRadius;
                 float y = initialPosition.y + Mathf.Sin(angle) * idleRadius;
                 transform.position = new Vector3(x, y, transform.position.z); // Maintain original Z
+            }
+        }
+    }
+
+    // Damage player on contact
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            HealthSystem health = other.GetComponent<HealthSystem>();
+            if (health != null)
+            {
+                health.TakeDamage(damageAmount);
             }
         }
     }
