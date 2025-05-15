@@ -9,6 +9,10 @@ public class Key : MonoBehaviour
 
     void Start()
     {
+        if (player != null)
+        {
+            player.keyScript = this; // Link this script to the player
+        }
         RandomizePosition();
     }
 
@@ -27,6 +31,7 @@ public class Key : MonoBehaviour
         float y = Mathf.Round(Random.Range(bounds.min.y, bounds.max.y));
 
         transform.position = new Vector3(x, y, 0f);
+        gameObject.SetActive(true); // Reactivate when ready
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -35,22 +40,25 @@ public class Key : MonoBehaviour
         {
             PlayerController pc = collision.GetComponent<PlayerController>();
 
-            // Only allow pickup if the player doesn't already have a key
             if (!pc.hasKey)
             {
                 pc.PickupKey();
-
-                if (maxSpawn > 1)
-                {
-                    maxSpawn--;
-                    RandomizePosition();
-                }
-                else
-                {
-                    Destroy(gameObject);
-                }
+                gameObject.SetActive(false); // Temporarily hide the key
             }
         }
     }
 
+    // Called by the player when the door is opened
+    public void OnKeyUsed()
+    {
+        if (maxSpawn > 1)
+        {
+            maxSpawn--;
+            RandomizePosition(); // Waited respawn
+        }
+        else
+        {
+            Destroy(gameObject); // No more spawns left
+        }
+    }
 }

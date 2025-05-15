@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 movement;
     private HealthSystem healthSystem;
 
+    public Key keyScript; // Set by Key script at runtime
+
 
     void Start()
     {
@@ -79,14 +81,17 @@ public class PlayerController : MonoBehaviour
         if (hasKey)
         {
             hasKey = false;
-            
 
             if (keys < keyImages.Length)
                 keyImages[keys].enabled = false;
 
             keys++;
-
             keyParticles.Stop();
+
+            if (keyScript != null)
+            {
+                keyScript.OnKeyUsed(); // Tell key to respawn
+            }
         }
     }
 

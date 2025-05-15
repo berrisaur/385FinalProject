@@ -3577,7 +3577,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 372486868}
   m_FillRect: {fileID: 23536200}
   m_HandleRect: {fileID: 372486867}
@@ -18711,6 +18711,7 @@ MonoBehaviour:
   - {fileID: 440549004}
   keyParticles: {fileID: 260962453}
   hasKey: 0
+  keyScript: {fileID: 2091742181}
 --- !u!212 &712592405
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -30843,6 +30844,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2091742181 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6088066528653540481, guid: ce9d9521c9ceff144883e315138a2cf1, type: 3}
+  m_PrefabInstance: {fileID: 1161553414}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f164e2abc848b748ac87a462035d78a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2146600668
 GameObject:
   m_ObjectHideFlags: 0
