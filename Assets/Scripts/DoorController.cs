@@ -25,7 +25,6 @@ public class DoorController : MonoBehaviour
             if (player != null && player.hasKey && currentLockIndex < locks.Length)
             {
                 GameObject currentLock = locks[currentLockIndex];
-                Animator anim = currentLock.GetComponent<Animator>();
                 AudioSource lockAudio = currentLock.GetComponent<AudioSource>();
 
                 float lockAudioLength = 0f;
@@ -36,18 +35,9 @@ public class DoorController : MonoBehaviour
                     lockAudioLength = lockAudio.clip.length;
                 }
 
-                if (anim != null)
-                {
-                    anim.SetTrigger("Unlock");
-                    float animLength = anim.GetCurrentAnimatorStateInfo(0).length;
-                    float waitTime = Mathf.Max(animLength, lockAudioLength);
-
-                    StartCoroutine(DestroyAfterDelay(currentLock, waitTime));
-                }
-                else
-                {
-                    Destroy(currentLock);
-                }
+                // ❌ Removed animation
+                // ✅ Just wait for sound, then destroy
+                StartCoroutine(DestroyAfterDelay(currentLock, lockAudioLength));
 
                 currentLockIndex++;
                 player.OpenDoor();
