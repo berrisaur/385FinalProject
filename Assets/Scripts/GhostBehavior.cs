@@ -9,6 +9,7 @@ public class GhostBehavior : MonoBehaviour
     public float idleSpeed = 0.5f;
     public float damageAmount = 25f;
     public float idleActivationDistance = 0.1f; // Distance threshold to start idling again
+    public AudioSource GhostHit;
 
     private Transform playerTransform;
     private Animator animator;
@@ -90,6 +91,7 @@ public class GhostBehavior : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            GhostHit.Play();
             HealthSystem health = other.GetComponent<HealthSystem>();
             if (health != null)
             {
