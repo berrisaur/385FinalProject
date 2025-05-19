@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     public int keys = 0;
     int totalKeys = 3;
     public TMP_Text keysLeft;
+    private bool canMove = true;
+
 
     public Image[] keyImages; // UI key icons
     public ParticleSystem keyParticles; // Assign in Inspector
@@ -33,12 +35,13 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (!canMove) return;
+
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
         keysLeft.text = "Keys left: " + (totalKeys - keys).ToString();
 
-        // Ensure particle system stays on while player has key
         if (hasKey && !keyParticles.isPlaying)
         {
             keyParticles.Play();
@@ -52,12 +55,17 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!canMove) return;
+
         rb.MovePosition(rb.position + movement.normalized * speed * Time.fixedDeltaTime);
     }
+    public void EnableControl(bool enable)
+    {
+        canMove = enable;
+    }
 
-    
 
-   public void PickupKey()
+    public void PickupKey()
 {
     if (!hasKey)
     {

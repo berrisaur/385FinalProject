@@ -1,5 +1,7 @@
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DoorController : MonoBehaviour
 {
@@ -71,5 +73,7 @@ public class DoorController : MonoBehaviour
         {
             doorAudio.Play();
         }
+        SceneManager.LoadScene("Ending Scene");
+
     }
 }
