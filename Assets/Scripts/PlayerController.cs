@@ -2,6 +2,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Rendering.Universal; // Needed for Light2D
+
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -11,6 +13,10 @@ public class PlayerController : MonoBehaviour
     int totalKeys = 3;
     public TMP_Text keysLeft;
     private bool canMove = true;
+
+    public Light2D playerLight; // Assign in Inspector
+    public float lightExpandAmount = 1.5f; // How much to expand when key is picked
+
 
 
     public Image[] keyImages; // UI key icons
@@ -30,6 +36,12 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         keySound = GetComponent<AudioSource>();
         healthSystem = GetComponent<HealthSystem>();
+
+        if (healthSystem != null)
+        {
+            healthSystem.OnHealthChanged += UpdateLightColor; // Subscribe to health event
+            UpdateLightColor(healthSystem.currentHealth, healthSystem.maxHealth); // Initial color set
+        }
 
     }
 
@@ -71,6 +83,12 @@ public class PlayerController : MonoBehaviour
     {
         if (keySound != null) keySound.Play();
         hasKey = true;
+        
+        if (playerLight != null)
+        {
+            playerLight.pointLightOuterRadius += lightExpandAmount;
+        }
+
         keyParticles.Play();
 
         // Heal 50% of max health
@@ -102,9 +120,22 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    
+    // Update Light2D color based on health percentage
+    private void UpdateLightColor(float currentHealth, float maxHealth)
+    {
+        if (playerLight == null || maxHealth <= 0f) return;
 
-    public void RestartGame(){
-        
+        float healthPercent = currentHealth / maxHealth;
+
+        // Interpolate from red (low) to white (full health)
+        Color targetColor = Color.Lerp(Color.red, Color.white, healthPercent);
+        playerLight.color = targetColor;
+    }
+
+    public void RestartGame()
+    {
+
         SceneManager.LoadScene(0);
     }
 }

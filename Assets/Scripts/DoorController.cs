@@ -37,8 +37,8 @@ public class DoorController : MonoBehaviour
                     lockAudioLength = lockAudio.clip.length;
                 }
 
-                // ❌ Removed animation
-                // ✅ Just wait for sound, then destroy
+               
+                // just wait for sound, then destroy
                 StartCoroutine(DestroyAfterDelay(currentLock, lockAudioLength));
 
                 currentLockIndex++;
@@ -62,13 +62,13 @@ public class DoorController : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-        // ✅ Change door sprite
+        // Change door sprite
         if (spriteRenderer != null && unlockedDoorSprite != null)
         {
             spriteRenderer.sprite = unlockedDoorSprite;
         }
 
-        // ✅ Play door open sound
+        // Play door open sound
         if (doorAudio != null)
         {
             doorAudio.Play();
