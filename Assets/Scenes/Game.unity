@@ -519,10 +519,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 768287533}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 11.6505}
-  m_SizeDelta: {x: 1535.8022, y: 123.301}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -0.13068, y: 44.1997}
+  m_SizeDelta: {x: 813.4714, y: 86.65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &127811824
 MonoBehaviour:
@@ -537,7 +537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5471698, g: 0.53942686, b: 0.53942686, a: 1}
+  m_Color: {r: 0.5471698, g: 0.53942686, b: 0.53942686, a: 0.5411765}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -18326,10 +18326,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 768287533}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -653, y: 11.65}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 8, y: 54}
+  m_SizeDelta: {x: 798.57, y: 66.9007}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &433507143
 MonoBehaviour:
@@ -18418,7 +18418,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -1302.139, w: -17.579529}
+  m_margin: {x: -7.594879, y: 0, z: 4.042938, w: -17.579529}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -19431,10 +19431,10 @@ RectTransform:
   - {fileID: 433507142}
   m_Father: {fileID: 1576444846}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.2435, y: -382}
-  m_SizeDelta: {x: 1521.513, y: 100}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -0.0050049, y: 41.3948}
+  m_SizeDelta: {x: 813.21, y: 82.7896}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &768287534
 MonoBehaviour:
@@ -19462,7 +19462,7 @@ MonoBehaviour:
   textFadeDuration: 1
   nextKey: 32
   player: {fileID: 712592403}
-  playerController: {fileID: 0}
+  playerController: {fileID: 712592404}
 --- !u!1 &850757827
 GameObject:
   m_ObjectHideFlags: 0
