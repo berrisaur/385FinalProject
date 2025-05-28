@@ -2,13 +2,13 @@
 - Project name: 385FinalProject
 - Unity version: Unity 6000.0.44f1
 - Active scene:
-  - Name: GameOver
+  - Name: Game
   - Tags:
     - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, Key, Door
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Ghost
 - Active game object:
-  - Name: Restart
-  - Tag: Untagged
-  - Layer: UI
+  - Name: PlayerCfharacter
+  - Tag: Player
+  - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
