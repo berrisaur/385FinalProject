@@ -17,15 +17,14 @@ public class PlayerController : MonoBehaviour
     public Light2D playerLight; // Assign in Inspector
     public float lightExpandAmount = 1.5f; // How much to expand when key is picked
 
-
-
     public Image[] keyImages; // UI key icons
     public ParticleSystem keyParticles; // Assign in Inspector
     public bool hasKey = false; // Prevent multiple pickups
-    private AudioSource keySound; 
+    private AudioSource keySound;
 
     private Rigidbody2D rb;
     private Vector2 movement;
+    private Vector2 lastPosition; // To track movement
     private HealthSystem healthSystem;
 
     public Key keyScript; // Set by Key script at runtime
@@ -36,13 +35,13 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         keySound = GetComponent<AudioSource>();
         healthSystem = GetComponent<HealthSystem>();
+        lastPosition = rb.position; // Initialize last position
 
         if (healthSystem != null)
         {
             healthSystem.OnHealthChanged += UpdateLightColor; // Subscribe to health event
             UpdateLightColor(healthSystem.currentHealth, healthSystem.maxHealth); // Initial color set
         }
-
     }
 
     void Update()
@@ -70,7 +69,15 @@ public class PlayerController : MonoBehaviour
         if (!canMove) return;
 
         rb.MovePosition(rb.position + movement.normalized * speed * Time.fixedDeltaTime);
+        lastPosition = rb.position; // Update last position after moving
     }
+
+    public bool IsMoving()
+    {
+        // Check if the player's current position is significantly different from the last recorded position
+        return Vector2.Distance(rb.position, lastPosition) > 0.01f; // Adjust threshold if needed
+    }
+
     public void EnableControl(bool enable)
     {
         canMove = enable;
@@ -78,28 +85,27 @@ public class PlayerController : MonoBehaviour
 
 
     public void PickupKey()
-{
-    if (!hasKey)
     {
-        if (keySound != null) keySound.Play();
-        hasKey = true;
-        
-        if (playerLight != null)
+        if (!hasKey)
         {
-            playerLight.pointLightOuterRadius += lightExpandAmount;
-        }
+            if (keySound != null) keySound.Play();
+            hasKey = true;
 
-        keyParticles.Play();
+            if (playerLight != null)
+            {
+                playerLight.pointLightOuterRadius += lightExpandAmount;
+            }
 
-        // Heal 50% of max health
-        if (healthSystem != null)
-        {
-            float healAmount = healthSystem.maxHealth * 0.5f;
-            healthSystem.Heal(healAmount);
+            keyParticles.Play();
+
+            // Heal 50% of max health
+            if (healthSystem != null)
+            {
+                float healAmount = healthSystem.maxHealth * 0.5f;
+                healthSystem.Heal(healAmount);
+            }
         }
     }
-}
-
 
 
     public void OpenDoor()
@@ -120,7 +126,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    
+
     // Update Light2D color based on health percentage
     private void UpdateLightColor(float currentHealth, float maxHealth)
     {
@@ -135,7 +141,6 @@ public class PlayerController : MonoBehaviour
 
     public void RestartGame()
     {
-
         SceneManager.LoadScene(0);
     }
 }
