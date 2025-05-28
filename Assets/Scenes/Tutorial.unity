@@ -158,6 +158,8 @@ MonoBehaviour:
   - 'In order to figure out how to escape, and get back together with your family. '
   - Be careful however, you can hear ghosts just outside
   - WASD or Arrow keys to move.
+  - "Press E to hold boxes laying around on the map. \nUse them to block enemies,
+    and clear your path. "
   - 'Collect the keys and get out. '
   nextKey: 32
   nextSceneName: Game
