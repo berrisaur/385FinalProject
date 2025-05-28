@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -13,12 +14,10 @@ public class TutorialManager : MonoBehaviour
     [Header("Tutorial Settings")]
     [TextArea(3, 10)]
     public List<string> tutorialPages;
-    public float textFadeDuration = 1f;
     public KeyCode nextKey = KeyCode.Space;
 
-    [Header("Player Control")]
-    public GameObject player;
-    public PlayerController playerController;
+    [Header("Scene Settings")]
+    public string nextSceneName;
 
     private int currentPage = 0;
     private bool isTextFullyVisible = false;
@@ -28,9 +27,6 @@ public class TutorialManager : MonoBehaviour
     {
         if (tutorialPanel != null)
             tutorialPanel.SetActive(true);
-
-        if (playerController != null)
-            playerController.EnableControl(false);
         StartCoroutine(ShowPage(tutorialPages[currentPage]));
     }
 
@@ -55,22 +51,12 @@ public class TutorialManager : MonoBehaviour
     IEnumerator ShowPage(string text)
     {
         isTextFullyVisible = false;
-        tutorialText.text = "";
-        tutorialText.alpha = 0f;
-
-        float t = 0f;
         tutorialText.text = text;
-
-        while (t < textFadeDuration)
-        {
-            tutorialText.alpha = Mathf.Lerp(0f, 1f, t / textFadeDuration);
-            t += Time.deltaTime;
-            yield return null;
-        }
-
         tutorialText.alpha = 1f;
+        yield return null;
         isTextFullyVisible = true;
     }
+
 
     void EndTutorial()
     {
@@ -82,7 +68,13 @@ public class TutorialManager : MonoBehaviour
         if (tutorialText != null)
             tutorialText.gameObject.SetActive(false);
 
-        if (playerController != null)
-            playerController.EnableControl(true);
+        if (!string.IsNullOrEmpty(nextSceneName))
+        {
+            SceneManager.LoadScene(nextSceneName); 
+        }
+        else
+        {
+            Debug.LogWarning("Next scene name not set in the TutorialManager.");
+        }
     }
 }
