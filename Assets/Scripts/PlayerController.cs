@@ -142,6 +142,6 @@ public class PlayerController : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneName);
+        SceneManager.LoadScene(1);
     }
 }
