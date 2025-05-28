@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 movement;
     private Vector2 lastPosition; // To track movement
     private HealthSystem healthSystem;
+    public string SceneName;
 
     public Key keyScript; // Set by Key script at runtime
 
@@ -141,6 +142,6 @@ public class PlayerController : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(SceneName);
     }
 }
