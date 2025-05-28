@@ -19271,6 +19271,7 @@ MonoBehaviour:
   - {fileID: 440549004}
   keyParticles: {fileID: 260962453}
   hasKey: 0
+  SceneName: GameOver
   keyScript: {fileID: 2091742181}
 --- !u!212 &712592405
 SpriteRenderer:
