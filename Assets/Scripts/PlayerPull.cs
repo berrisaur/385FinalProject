@@ -3,9 +3,7 @@ using UnityEngine;
 public class PlayerPull : MonoBehaviour
 {
     public KeyCode pullKey = KeyCode.E;
-    public KeyCode throwKey = KeyCode.F; // <- New key to throw
     public float pullRange = 1f;
-    public float throwForce = 10f; // <- Strength of throw
     private GameObject currentBox;
     private bool isPulling = false;
 
@@ -30,11 +28,6 @@ public class PlayerPull : MonoBehaviour
                 Time.deltaTime * 5f
             );
         }
-
-        if (isPulling && Input.GetKeyDown(throwKey))
-        {
-            ThrowObject();
-        }
     }
 
     void TryStartPull()
@@ -42,7 +35,7 @@ public class PlayerPull : MonoBehaviour
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, pullRange);
         foreach (var hit in hits)
         {
-            if (hit.CompareTag("Object"))
+            if (hit.CompareTag("Box"))
             {
                 currentBox = hit.gameObject;
                 isPulling = true;
@@ -55,19 +48,5 @@ public class PlayerPull : MonoBehaviour
     {
         isPulling = false;
         currentBox = null;
-    }
-
-    void ThrowObject()
-    {
-        if (currentBox == null) return;
-
-        Rigidbody2D rb = currentBox.GetComponent<Rigidbody2D>();
-        if (rb != null)
-        {
-            Vector2 throwDir = (currentBox.transform.position - transform.position).normalized;
-            rb.linearVelocity = throwDir * throwForce;
-        }
-
-        StopPull();
     }
 }

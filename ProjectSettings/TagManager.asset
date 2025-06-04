@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Key
   - Door
+  - Box
   layers:
   - Default
   - TransparentFX
