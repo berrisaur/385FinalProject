@@ -157,10 +157,12 @@ MonoBehaviour:
   - You shove it aside, and resolve yourself to explore the house
   - 'In order to figure out how to escape, and get back together with your family. '
   - Be careful however, you can hear ghosts just outside
+  - 'The ghosts scream your name, aiming to keep you here together with them for
+    eternity. '
   - WASD or Arrow keys to move.
   - "Press E to hold boxes laying around on the map. \nUse them to block enemies,
     and clear your path. "
-  - 'Collect the keys and get out. '
+  - 'Collect the keys and get to safety. '
   nextKey: 32
   nextSceneName: Game
 --- !u!224 &36125479
